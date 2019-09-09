@@ -13,7 +13,3 @@ export class LoginComponent implements OnInit {
   }
 
 }
-
-// /login form
-// /register form
-// / && logedin nav/sidebar
