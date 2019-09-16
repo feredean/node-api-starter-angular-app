@@ -1,1 +1,35 @@
-<p>login works!</p>
+<mat-card>
+    <form fxLayout="column" fxLayoutAlign="center center" [formGroup]='loginForm' (ngSubmit)='onSubmit(loginForm)'>
+        <mat-card-header>
+            <mat-card-title>
+                <h3>login</h3>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+            <mat-form-field>
+                <input matInput type="email" placeholder="e-mail" formControlName="email">
+                <mat-error *ngIf="error.email">{{error.email}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" placeholder="password" formControlName="password">
+                <mat-error *ngIf="error.password">{{error.password}}</mat-error>
+            </mat-form-field>
+            <div *ngIf="serverErrors">
+                <mat-error *ngFor="let error of serverErrors.message.errors">{{error.msg}}</mat-error>
+            </div>
+            <div class="redirect-links">
+                <div>
+                    <a routerLink='/register'>don't have an account</a>
+                </div>
+                <div>
+                    <a routerLink='/forgot'>forgot password</a>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div>
+                <button mat-raised-button color="primary" type='submit' [disabled]='loginForm.invalid'>Login</button>
+            </div>
+        </mat-card-actions>
+    </form>
+</mat-card>
