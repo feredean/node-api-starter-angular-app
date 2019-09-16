@@ -1,1 +1,36 @@
-<p>register works!</p>
+<mat-card>
+    <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="registerForm" spellcheck="false"
+        (ngSubmit)="onSubmit(registerForm)">
+        <mat-card-header>
+            <mat-card-title>
+                <h3>register</h3>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+            <mat-form-field>
+                <input matInput formControlName="email" type="email" placeholder="email">
+                <mat-error *ngIf="error.email">{{error.email}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput formControlName="name" type="text" placeholder="name (optional)">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput formControlName="password" type="password" placeholder="password">
+                <mat-error *ngIf="error.password">{{error.password}}</mat-error>
+            </mat-form-field>
+
+            <div *ngIf="serverErrors">
+                <mat-error *ngFor="let error of serverErrors.message.errors">{{error.msg}}</mat-error>
+            </div>
+            <div class="redirect-links">
+                <a routerLink="/login">already have an account</a>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div>
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="registerForm.invalid">create</button>
+            </div>
+        </mat-card-actions>
+    </form>
+</mat-card>
