@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-app-layout',
@@ -12,7 +13,10 @@ import { MatSidenav } from '@angular/material';
 export class AppLayoutComponent {
   @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private authService: AuthService
+  ) { }
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(map(result => result.matches))
@@ -21,5 +25,9 @@ export class AppLayoutComponent {
     this.isHandset$.subscribe(value => {
       if (value) this.sidenav.close()
     })
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

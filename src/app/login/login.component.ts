@@ -33,8 +33,7 @@ export class LoginComponent implements OnInit {
       email: 'email address has to be valid'
     },
     password: {
-      required: 'password is required',
-      minlength: 'password min length is 8 chars'
+      required: 'password is required'
 
     }
   };
@@ -54,8 +53,7 @@ export class LoginComponent implements OnInit {
           Validators.email
         ]],
         password: ['', [
-          Validators.required,
-          Validators.minLength(8)
+          Validators.required
         ]]
       });
 

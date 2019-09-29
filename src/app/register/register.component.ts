@@ -46,8 +46,6 @@ export class RegisterComponent {
   ) { }
 
   ngOnInit() {
-
-
     this.registerForm = this.fb.group(
       {
         email: ['', [

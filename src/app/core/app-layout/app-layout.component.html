@@ -1,6 +1,6 @@
 <mat-sidenav-container>
     <mat-sidenav #sidenav [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
-        <nasa-sidenav-content (closeSidenav)="closeIfHandset()"></nasa-sidenav-content>
+        <nasa-sidenav-content (closeSidenav)="closeIfHandset()" (logout)="logout()"></nasa-sidenav-content>
     </mat-sidenav>
     <mat-sidenav-content>
         <nasa-toolbar [isHandset$]="isHandset$" (toggleSidenav)="sidenav.toggle()"></nasa-toolbar>

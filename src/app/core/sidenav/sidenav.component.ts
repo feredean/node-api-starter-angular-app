@@ -7,6 +7,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class SidenavComponent {
   @Output() closeSidenav = new EventEmitter<void>()
+  @Output() logout = new EventEmitter<void>()
 
   constructor() { }
 }

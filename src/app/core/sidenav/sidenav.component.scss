@@ -1,6 +1,17 @@
-mat-nav-list {
-    min-width: 200px;
-    mat-icon {
-        margin-right: 10px;
+.content-container {
+    height: 100%;
+    position: relative;
+
+    .bottom {
+        position: absolute;
+        bottom: 8px;
     }
+
+    mat-nav-list {
+        min-width: 200px;
+        mat-icon {
+            margin-right: 10px;
+        }
+    }
+    
 }
