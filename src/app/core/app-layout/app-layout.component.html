@@ -3,7 +3,9 @@
         <nasa-sidenav-content (closeSidenav)="closeIfHandset()" (logout)="logout()"></nasa-sidenav-content>
     </mat-sidenav>
     <mat-sidenav-content>
-        <nasa-toolbar [isHandset$]="isHandset$" (toggleSidenav)="sidenav.toggle()"></nasa-toolbar>
-        <router-outlet></router-outlet>
+        <nasa-toolbar [isHandset$]="isHandset$" [profile$]="profile$" (toggleSidenav)="sidenav.toggle()"></nasa-toolbar>
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

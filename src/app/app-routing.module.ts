@@ -21,10 +21,10 @@ const routes: Routes = [
         path: '',
         loadChildren: () => import("src/app/hello/hello.module").then(m => m.HelloModule)
       },
-      // {
-      //   path: 'mini-game',
-      //   loadChildren: () => import().then()
-      // }
+      {
+        path: 'profile',
+        loadChildren: () => import("src/app/profile/profile.module").then(m => m.ProfileModule)
+      }
     ]
   }
 ];

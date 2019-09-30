@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 
 enum Fields {
   EMAIL = "email",
-  PASSWORD = "password"
+  PASSWORD = "password",
+  NAME = "name"
 }
 type Errors = {
   [key in Fields]: string;
@@ -23,7 +24,8 @@ export class RegisterComponent {
   serverErrors: ServerErrors;
   error: Errors = {
     email: '',
-    password: ''
+    password: '',
+    name: ''
   };
 
 
@@ -35,7 +37,9 @@ export class RegisterComponent {
     password: {
       required: 'password is required',
       minlength: 'password min length is 8 chars'
-
+    },
+    name: {
+      maxlength: 'name max length is 30 chars'
     }
   };
 
@@ -56,14 +60,17 @@ export class RegisterComponent {
           Validators.required,
           Validators.minLength(8)
         ]],
-        name: ''
+        name: ['', Validators.maxLength(30)]
       });
 
     const emailControl = this.registerForm.get('email')
-    const passwordControl = this.registerForm.get('password')
-
     emailControl.valueChanges.subscribe(() => this.notify(emailControl, Fields.EMAIL))
+
+    const passwordControl = this.registerForm.get('password')
     passwordControl.valueChanges.subscribe(() => this.notify(passwordControl, Fields.PASSWORD))
+
+    const nameControl = this.registerForm.get('name')
+    nameControl.valueChanges.subscribe(() => this.notify(nameControl, Fields.NAME))
   }
 
   onSubmit(form: FormGroup) {

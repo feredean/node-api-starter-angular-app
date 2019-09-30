@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material';
-import { AuthService } from '../services/auth.service';
+import { AuthService, Profile } from '../services/auth.service';
 
 @Component({
   selector: 'app-app-layout',
@@ -20,6 +20,7 @@ export class AppLayoutComponent {
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(map(result => result.matches))
+  profile$: Observable<Profile> = this.authService.profileChange$
 
   closeIfHandset() {
     this.isHandset$.subscribe(value => {

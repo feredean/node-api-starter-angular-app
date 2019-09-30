@@ -1,0 +1,20 @@
+mat-toolbar {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1000;
+    .profile {
+        position: absolute;
+        right: 10px;    
+        display: flex;
+        height: 32px;
+        outline: none;
+
+        img {
+            height: calc(100% - 2px);
+            width: 30px;
+            margin: 0 10px;
+            border: 1px solid white;
+        }
+    }
+}

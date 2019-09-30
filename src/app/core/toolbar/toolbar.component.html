@@ -2,4 +2,8 @@
     <button mat-icon-button type="button" *ngIf="isHandset$ | async" (click)="toggleSidenav.emit()">
         <mat-icon>menu</mat-icon>
     </button>
+    <div class="profile" routerLink="/profile">
+        <span>{{name}}</span>
+        <img [src]="avatar">
+    </div>
 </mat-toolbar>
