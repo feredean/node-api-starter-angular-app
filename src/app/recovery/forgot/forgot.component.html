@@ -1,9 +1,9 @@
 <mat-card>
-    <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="loginForm" spellcheck="false"
-        (ngSubmit)="onSubmit(loginForm)">
+    <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="forgotForm" spellcheck="false"
+        (ngSubmit)="onSubmit(forgotForm)">
         <mat-card-header>
             <mat-card-title>
-                <h3>login</h3>
+                <h3>forgot</h3>
             </mat-card-title>
         </mat-card-header>
         <mat-card-content fxLayout="column" fxLayoutAlign="center center">
@@ -11,26 +11,19 @@
                 <input matInput formControlName="email" type="email" placeholder="email">
                 <mat-error *ngIf="error.email">{{error.email}}</mat-error>
             </mat-form-field>
-            <mat-form-field>
-                <input matInput formControlName="password" type="password" placeholder="password">
-                <mat-error *ngIf="error.password">{{error.password}}</mat-error>
-            </mat-form-field>
 
             <div *ngIf="serverErrors">
                 <mat-error *ngFor="let error of serverErrors.message.errors">{{error.msg}}</mat-error>
             </div>
             <div class="redirect-links">
                 <div>
-                    <a routerLink="/register">don't have an account</a>
-                </div>
-                <div>
-                    <a routerLink="/recovery/forgot">forgot password</a>
+                    <a routerLink="/login">back to login</a>
                 </div>
             </div>
         </mat-card-content>
         <mat-card-actions>
             <div>
-                <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">login</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="forgotForm.invalid">login</button>
             </div>
         </mat-card-actions>
     </form>

@@ -1,15 +1,18 @@
-export interface LoginData {
+export interface LoginRequest {
   email: string;
   password: string;
 }
-export interface RegisterData {
+export interface RegisterRequest {
   email: string;
   password: string;
 }
-export interface ProfileData {
+export interface ProfileRequest {
   name: string;
   location: string;
   website: string;
+}
+export interface ForgotRequest {
+  email: string;
 }
 export interface PasswordChangeData {
   password: string;

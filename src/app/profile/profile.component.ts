@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
+
 import { ServerErrors } from '../core/models/error-message';
 import { AuthService, Profile } from '../core/services/auth.service';
-import { Subscription } from 'rxjs';
-
-function passwordMatcher(c: AbstractControl): { [key: string]: boolean } | null {
-  const passwordControl = c.get('password');
-  const confirmControl = c.get('confirm');
-  if (passwordControl.pristine || confirmControl.pristine) return null;
-  if (passwordControl.value === confirmControl.value) return null;
-  return { match: true }
-}
+import { matchPasswords } from '../shared/validators/password-matcher.validator';
 
 enum Fields {
   PASSWORD = "password",
@@ -51,7 +46,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -71,13 +67,13 @@ export class ProfileComponent implements OnInit {
       }
     )
     this.passwordForm = this.fb.group({
-      password: ['asdasdasd', [
+      password: ['', [
         Validators.required,
         Validators.minLength(8)]],
-      confirm: ['asdasdasd', [
+      confirm: ['', [
         Validators.required,
         Validators.minLength(8)]]
-    }, { validator: passwordMatcher })
+    }, { asyncValidators: matchPasswords.bind(this) })
 
     const passwordControl = this.passwordForm.get('password')
     passwordControl.valueChanges.subscribe(() => this.notify(passwordControl, Fields.PASSWORD))
@@ -88,20 +84,21 @@ export class ProfileComponent implements OnInit {
 
   submitProfile(form: FormGroup) {
     this.authService.updateProfile(form.value)
-      .subscribe({
-        error: (err: ServerErrors) => this.serverErrors = err
-      })
+      .subscribe(
+        () => this.snackBar.open('Profile updated', 'Got it!', { duration: 3000 }),
+        (err: ServerErrors) => this.serverErrors = err
+      )
   }
 
   submitPassword(form: FormGroup) {
     this.authService.changePassword(form.value)
       .subscribe(
-        success => console.log('s', success),
-        err => this.serverErrors = err
+        () => this.snackBar.open('Password changed', 'Got it!', { duration: 3000 }),
+        (err: ServerErrors) => this.serverErrors = err
       )
   }
 
-  notify(c: AbstractControl, field: string): void {
+  private notify(c: AbstractControl, field: string): void {
     this.error[field] = '';
     if ((c.touched || c.dirty) && c.errors) {
       this.error[field] = Object.keys(c.errors)

@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: () => import("src/app/register/register.module").then(m => m.RegisterModule)
   },
   {
+    path: 'recovery',
+    loadChildren: () => import("src/app/recovery/recovery.module").then(m => m.RecoveryModule)
+  },
+  {
     path: '',
     component: AppLayoutComponent,
     canActivate: [AuthGuard],

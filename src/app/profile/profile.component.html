@@ -18,7 +18,7 @@
             </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit">update</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">update</button>
         </mat-card-actions>
     </form>
 </mat-card>
@@ -48,7 +48,7 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit">update</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid">update</button>
         </mat-card-actions>
     </form>
 </mat-card>

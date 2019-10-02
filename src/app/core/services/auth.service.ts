@@ -7,7 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { ErrorMessage } from '../models/error-message';
-import { LoginData, RegisterData, ProfileData, PasswordChangeData, SuccessResponse } from '../models/data';
+import { LoginRequest, RegisterRequest, ProfileRequest, PasswordChangeData, SuccessResponse, ForgotRequest } from './auth.model';
 
 interface TokenResponse {
   token: string
@@ -51,7 +51,17 @@ export class AuthService {
     return this.verifyToken();
   }
 
-  login(login: LoginData): Observable<boolean> {
+  refreshToken(): Observable<Response | boolean> {
+    this.refreshProfile();
+    if (!this.verifyToken()) return of(false)
+    return this.http.get<TokenResponse>(`${environment.API}/account/jwt/refresh`)
+      .pipe(
+        map(res => this.handleToken(res)),
+        catchError(this.handleError)
+      )
+  }
+
+  login(login: LoginRequest): Observable<boolean> {
     return this.http.post<TokenResponse>(`${environment.API}/account/login`, login)
       .pipe(
         map(res => this.handleToken(res)),
@@ -59,7 +69,7 @@ export class AuthService {
       )
   }
 
-  register(registration: RegisterData): Observable<boolean> {
+  register(registration: RegisterRequest): Observable<boolean> {
     return this.http.post<TokenResponse>(`${environment.API}/account/register`, registration)
       .pipe(
         map(res => this.handleToken(res)),
@@ -67,8 +77,8 @@ export class AuthService {
       )
   }
 
-  changePassword(passwordData: PasswordChangeData): Observable<boolean> {
-    return this.http.post<SuccessResponse>(`${environment.API}/account/password`, passwordData)
+  forgotPassword(email: ForgotRequest): Observable<boolean> {
+    return this.http.post<SuccessResponse>(`${environment.API}/account/forgot`, email)
       .pipe(
         map((res: SuccessResponse) => {
           if (res.success) return true
@@ -83,17 +93,18 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  refreshToken(): Observable<Response | boolean> {
-    this.refreshProfile();
-    if (!this.verifyToken()) return of(false)
-    return this.http.get<TokenResponse>(`${environment.API}/account/jwt/refresh`)
+  changePassword(passwordData: PasswordChangeData): Observable<boolean> {
+    return this.http.post<SuccessResponse>(`${environment.API}/account/password`, passwordData)
       .pipe(
-        map(res => this.handleToken(res)),
+        map((res: SuccessResponse) => {
+          if (res.success) return true
+          return false
+        }),
         catchError(this.handleError)
       )
   }
 
-  updateProfile(profile: ProfileData): Observable<Response | Profile> {
+  updateProfile(profile: ProfileRequest): Observable<Response | Profile> {
     return this.http.post<Profile>(`${environment.API}/account/profile`, profile)
       .pipe(
         tap((res: Profile) => this.profile$.next(this.mapProfile(res)))
@@ -114,6 +125,7 @@ export class AuthService {
   }
 
   private refreshProfile(): void {
+    if (!this.isAuthenticated()) return
     this.http.get<Profile>(`${environment.API}/account/profile`)
       .pipe(
         map((res): Profile => (this.mapProfile(res)))

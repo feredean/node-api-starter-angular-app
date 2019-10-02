@@ -9,6 +9,7 @@ mat-toolbar {
         display: flex;
         height: 32px;
         outline: none;
+        user-select: none;
 
         img {
             height: calc(100% - 2px);

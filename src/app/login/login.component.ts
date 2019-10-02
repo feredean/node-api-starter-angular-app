@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
     },
     password: {
       required: 'password is required'
-
     }
   };
 
@@ -46,16 +45,15 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    this.loginForm = this.fb.group(
-      {
-        email: ['', [
-          Validators.required,
-          Validators.email
-        ]],
-        password: ['', [
-          Validators.required
-        ]]
-      });
+    this.loginForm = this.fb.group({
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]],
+      password: ['', [
+        Validators.required
+      ]]
+    });
 
     const emailControl = this.loginForm.get('email')
     const passwordControl = this.loginForm.get('password')
