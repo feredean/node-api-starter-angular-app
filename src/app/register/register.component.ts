@@ -74,6 +74,7 @@ export class RegisterComponent {
   }
 
   onSubmit(form: FormGroup) {
+    this.serverErrors = undefined;
     this.authService.register(form.value)
       .subscribe(
         () => this.router.navigate(['/']),

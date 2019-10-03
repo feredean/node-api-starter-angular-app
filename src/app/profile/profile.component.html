@@ -23,32 +23,12 @@
     </form>
 </mat-card>
 
+<mat-card class="profile">
+    <nasa-password-form [errors]="serverErrors" (onSubmit)="submitPassword($event)"></nasa-password-form>
+</mat-card>
+
 <mat-card>
-    <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="passwordForm" spellcheck="false"
-        (ngSubmit)="submitPassword(passwordForm)">
-        <mat-card-header>
-            <mat-card-title>
-                <h3>password</h3>
-            </mat-card-title>
-        </mat-card-header>
-        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
-            <mat-form-field>
-                <input matInput formControlName="password" type="password" placeholder="password">
-                <mat-error *ngIf="error.password">{{error.password}}</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput formControlName="confirm" type="password" placeholder="confirm password">
-                <mat-error *ngIf="error.confirm">{{error.confirm}}</mat-error>
-            </mat-form-field>
-            <div *ngIf="passwordForm.errors?.match">
-                <mat-error>password and confirm don't match</mat-error>
-            </div>
-            <div *ngIf="serverErrors">
-                <mat-error *ngFor="let error of serverErrors.message?.errors">{{error.msg}}</mat-error>
-            </div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid">update</button>
-        </mat-card-actions>
-    </form>
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <button mat-raised-button color="warn" type="submit" (click)="deleteProfile()">delete profile</button>
+    </div>
 </mat-card>

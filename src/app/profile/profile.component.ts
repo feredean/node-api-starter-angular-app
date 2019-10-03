@@ -1,20 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { ServerErrors } from '../core/models/error-message';
 import { AuthService, Profile } from '../core/services/auth.service';
-import { matchPasswords } from '../shared/validators/password-matcher.validator';
-
-enum Fields {
-  PASSWORD = "password",
-  CONFIRM = "confirm"
-}
-
-type Errors = {
-  [key in Fields]: string;
-}
+import { PasswordChangeRequest } from '../core/services/auth.model';
+import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -26,28 +19,15 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   passwordForm: FormGroup;
   serverErrors: ServerErrors;
-  error: Errors = {
-    password: '',
-    confirm: ''
-  }
 
   profileSubscription: Subscription;
-
-  private validationMessages = {
-    password: {
-      required: 'password is required',
-      minlength: 'password min length is 8 chars'
-    },
-    confirm: {
-      required: 'confirm is required',
-      minlength: 'confirm min length is 8 chars'
-    }
-  };
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -66,45 +46,45 @@ export class ProfileComponent implements OnInit {
         })
       }
     )
-    this.passwordForm = this.fb.group({
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8)]],
-      confirm: ['', [
-        Validators.required,
-        Validators.minLength(8)]]
-    }, { asyncValidators: matchPasswords.bind(this) })
-
-    const passwordControl = this.passwordForm.get('password')
-    passwordControl.valueChanges.subscribe(() => this.notify(passwordControl, Fields.PASSWORD))
-
-    const confirmControl = this.passwordForm.get('confirm')
-    confirmControl.valueChanges.subscribe(() => this.notify(confirmControl, Fields.CONFIRM))
   }
 
   submitProfile(form: FormGroup) {
     this.authService.updateProfile(form.value)
       .subscribe(
-        () => this.snackBar.open('Profile updated', 'Got it!', { duration: 3000 }),
-        (err: ServerErrors) => this.serverErrors = err
+        () => this.snackBar.open('Profile updated', 'Got it!', { duration: 3000 })
       )
   }
 
-  submitPassword(form: FormGroup) {
-    this.authService.changePassword(form.value)
+  submitPassword(data: PasswordChangeRequest) {
+    this.serverErrors = undefined;
+    this.authService.changePassword(data)
       .subscribe(
         () => this.snackBar.open('Password changed', 'Got it!', { duration: 3000 }),
         (err: ServerErrors) => this.serverErrors = err
       )
   }
 
-  private notify(c: AbstractControl, field: string): void {
-    this.error[field] = '';
-    if ((c.touched || c.dirty) && c.errors) {
-      this.error[field] = Object.keys(c.errors)
-        .map(key => this.validationMessages[field][key]);
-    }
+  deleteProfile(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+      width: '350px',
+      data: {
+        message: 'Are you sure you want to delete your account?'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.authService.deleteAccount()
+          .subscribe(
+            () => {
+              this.snackBar.open('Account successfully deleted', 'Got it!', { duration: 3000 })
+              this.authService.logout()
+              this.router.navigate(['/login'])
+            }
+          )
+      }
+    });
   }
+
 
   ngOnDestroy() {
     this.profileSubscription.unsubscribe();

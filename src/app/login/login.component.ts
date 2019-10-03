@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
+    this.serverErrors = undefined;
     this.authService.login(form.value)
       .subscribe(
         () => this.router.navigate(['/']),

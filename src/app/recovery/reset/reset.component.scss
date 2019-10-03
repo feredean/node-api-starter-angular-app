@@ -3,11 +3,9 @@ mat-card {
     width: 100vw;
     font-size: 20px;
     padding: 0;
-    form {
-        width: 100%;
+    nasa-password-form {
+        display: block;
         height: 100%;
-        .redirect-links {
-            margin-top: 20px;
-        }
+        width: 100%;
     }
 }

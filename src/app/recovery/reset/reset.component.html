@@ -1,33 +1,3 @@
-<mat-card>
-    <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="resetForm" spellcheck="false"
-        (ngSubmit)="onSubmit(resetForm)">
-        <mat-card-header>
-            <mat-card-title>
-                <h3>reset</h3>
-            </mat-card-title>
-        </mat-card-header>
-        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
-
-            <mat-form-field>
-                <input matInput formControlName="password" type="password" placeholder="password">
-                <mat-error *ngIf="error.password">{{error.password}}</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput formControlName="confirm" type="password" placeholder="confirm password">
-                <mat-error *ngIf="error.confirm">{{error.confirm}}</mat-error>
-            </mat-form-field>
-            <div *ngIf="passwordForm.errors?.match">
-                <mat-error>password and confirm don't match</mat-error>
-            </div>
-            <div *ngIf="serverErrors">
-                <mat-error *ngFor="let error of serverErrors.message?.errors">{{error.msg}}</mat-error>
-            </div>
-
-        </mat-card-content>
-        <mat-card-actions>
-            <div>
-                <button mat-raised-button color="primary" type="submit" [disabled]="resetForm.invalid">login</button>
-            </div>
-        </mat-card-actions>
-    </form>
+<mat-card class="reset-password">
+    <nasa-password-form [errors]="serverErrors" (onSubmit)="onSubmit($event)"></nasa-password-form>
 </mat-card>

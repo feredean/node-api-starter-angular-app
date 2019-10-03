@@ -7,7 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { ErrorMessage } from '../models/error-message';
-import { LoginRequest, RegisterRequest, ProfileRequest, PasswordChangeData, SuccessResponse, ForgotRequest } from './auth.model';
+import { LoginRequest, RegisterRequest, ProfileRequest, PasswordChangeRequest, SuccessResponse, ForgotRequest } from './auth.model';
 
 interface TokenResponse {
   token: string
@@ -52,7 +52,6 @@ export class AuthService {
   }
 
   refreshToken(): Observable<Response | boolean> {
-    this.refreshProfile();
     if (!this.verifyToken()) return of(false)
     return this.http.get<TokenResponse>(`${environment.API}/account/jwt/refresh`)
       .pipe(
@@ -80,10 +79,15 @@ export class AuthService {
   forgotPassword(email: ForgotRequest): Observable<boolean> {
     return this.http.post<SuccessResponse>(`${environment.API}/account/forgot`, email)
       .pipe(
-        map((res: SuccessResponse) => {
-          if (res.success) return true
-          return false
-        }),
+        map((res: SuccessResponse) => !!res.success),
+        catchError(this.handleError)
+      )
+  }
+
+  deleteAccount(): Observable<boolean> {
+    return this.http.post<SuccessResponse>(`${environment.API}/account/delete`, {})
+      .pipe(
+        map(res => !!res.success),
         catchError(this.handleError)
       )
   }
@@ -93,13 +97,10 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
-  changePassword(passwordData: PasswordChangeData): Observable<boolean> {
+  changePassword(passwordData: PasswordChangeRequest): Observable<boolean> {
     return this.http.post<SuccessResponse>(`${environment.API}/account/password`, passwordData)
       .pipe(
-        map((res: SuccessResponse) => {
-          if (res.success) return true
-          return false
-        }),
+        map((res: SuccessResponse) => !!res.success),
         catchError(this.handleError)
       )
   }
@@ -108,6 +109,14 @@ export class AuthService {
     return this.http.post<Profile>(`${environment.API}/account/profile`, profile)
       .pipe(
         tap((res: Profile) => this.profile$.next(this.mapProfile(res)))
+      )
+  }
+
+  resetPassword(data: PasswordChangeRequest, token: string): Observable<boolean> {
+    return this.http.post<SuccessResponse>(`${environment.API}/account/reset/${token}`, data)
+      .pipe(
+        map((res: SuccessResponse) => !!res.success),
+        catchError(this.handleError)
       )
   }
 
@@ -148,6 +157,7 @@ export class AuthService {
       this.token = res.token;
       this.JWTPayload = this.jwtHelper.decodeToken(this.token)
       localStorage.setItem('token', res.token)
+      this.refreshProfile();
       return true
     } else {
       return false

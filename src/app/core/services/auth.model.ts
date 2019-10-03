@@ -14,7 +14,7 @@ export interface ProfileRequest {
 export interface ForgotRequest {
   email: string;
 }
-export interface PasswordChangeData {
+export interface PasswordChangeRequest {
   password: string;
   confirm: string;
 }
