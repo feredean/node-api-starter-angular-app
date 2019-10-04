@@ -1,0 +1,12 @@
+.container {
+    margin: 30px;
+    mat-card {
+        margin-bottom: 10px;
+        img {
+            height: 32px;
+            width: 32px;
+            margin: 0 10px;
+            border: 1px solid white;
+        }
+    }
+}

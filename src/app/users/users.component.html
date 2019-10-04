@@ -1,0 +1,10 @@
+<div class="container">
+    <mat-card *ngFor="let user of users" fxLayout="row" fxLayoutAlign="">
+        <div>
+            <img [src]="user.avatar">
+        </div>
+        <div fxLayoutAlign="center center">
+            {{user.profile.name}}
+        </div>
+    </mat-card>
+</div>

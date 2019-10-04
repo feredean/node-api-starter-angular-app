@@ -10,9 +10,14 @@ import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthService } from './services/auth.service';
 
+
+export function jwtTokenGetter() {
+  return localStorage.getItem('token');
+}
+
 const JWTModuleOptions = {
   config: {
-    tokenGetter: () => localStorage.getItem('token'),
+    tokenGetter: jwtTokenGetter,
     whitelistedDomains:
       ['localhost:9100', 'node-api-starter.experiments.explabs.io']
   }

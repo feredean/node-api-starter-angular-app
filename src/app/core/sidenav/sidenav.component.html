@@ -9,6 +9,12 @@
             <span class='nav-caption'>Hello</span>
         </a>
     </mat-nav-list>
+    <mat-nav-list *ngIf="(JWTPayload$ | async).role === 'admin'">
+        <a mat-list-item routerLink="/users" (click)="closeSidenav.emit()">
+            <mat-icon>perm_identity</mat-icon>
+            <span class='nav-caption'>Users</span>
+        </a>
+    </mat-nav-list>
     <div class="bottom">
         <mat-divider></mat-divider>
         <mat-nav-list>

@@ -38,7 +38,9 @@ export interface Profile {
 export class AuthService {
 
   token: string | null;
-  JWTPayload: JWTPayload;
+
+  private payload$ = new BehaviorSubject<JWTPayload>({} as JWTPayload)
+  payloadUpdate$ = this.payload$.asObservable()
   private profile$ = new BehaviorSubject<Profile>({} as Profile)
   profileChange$ = this.profile$.asObservable()
 
@@ -95,6 +97,13 @@ export class AuthService {
   logout(): void {
     this.token = null;
     localStorage.removeItem('token');
+  }
+
+  getAllUsers(): Observable<any> {
+    return this.http.get(`${environment.API}/users`)
+      .pipe(
+        tap(w => console.log(w))
+      )
   }
 
   changePassword(passwordData: PasswordChangeRequest): Observable<boolean> {
@@ -155,7 +164,7 @@ export class AuthService {
   private handleToken(res: TokenResponse): boolean {
     if (res.token) {
       this.token = res.token;
-      this.JWTPayload = this.jwtHelper.decodeToken(this.token)
+      this.payload$.next(this.jwtHelper.decodeToken(this.token))
       localStorage.setItem('token', res.token)
       this.refreshProfile();
       return true

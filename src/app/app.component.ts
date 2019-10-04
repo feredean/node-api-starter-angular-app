@@ -9,7 +9,6 @@ import { AuthService } from './core/services/auth.service';
 export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
-  title = 'node-api-starter-app';
 
   ngOnInit() {
     this.authService.refreshToken().subscribe({
