@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-api-starter-angular-app
+spec:
+  replicas: 1
+  revisionHistoryLimit: 4
+  selector:
+    matchLabels:
+      app: node-api-starter-angular-app
+  template:
+    metadata:
+      labels:
+        app: node-api-starter-angular-app
+    spec:
+      nodeSelector:
+      containers:
+      - name: node-api-starter-angular-app
+        image: feredean/node-api-starter-angular-app:1559296564
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-api-starter-angular-app
+  labels:
+    app: node-api-starter-angular-app
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: node-api-starter-angular-app
