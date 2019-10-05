@@ -18,22 +18,22 @@ describe('AppLayoutComponent', () => {
 
   beforeEach(async(() => {
     PROFILE = {
-      avatar: "https://gravatar.com/avatar/5985c7230839f53ead828b47b6f01c32?s=200&d=retro",
+      avatar: 'https://gravatar.com/avatar/5985c7230839f53ead828b47b6f01c32?s=200&d=retro',
       profile: {
         gender: undefined,
         location: undefined,
-        name: "username",
+        name: 'username',
         picture: undefined,
         website: undefined
       }
-    }
+    };
 
     JWT_PAYLOAD = {
-      email: "email@gmail.com",
+      email: 'email@gmail.com',
       exp: 1570800077,
-      role: "admin",
-      sub: "b62cef8a-7b74-4002-9022-1431b14b1ca6"
-    }
+      role: 'admin',
+      sub: 'b62cef8a-7b74-4002-9022-1431b14b1ca6'
+    };
 
     mockAuthService = jasmine.createSpyObj(['logout']);
     mockAuthService.profileChange$ = of(PROFILE);

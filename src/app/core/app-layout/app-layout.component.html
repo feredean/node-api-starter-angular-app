@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-    <mat-sidenav #sidenav [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+    <mat-sidenav #sidenav [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
         <nasa-sidenav-content [JWTPayload$]="JWTPayload$" (closeSidenav)="closeIfHandset()" (logout)="logout()">
         </nasa-sidenav-content>
     </mat-sidenav>

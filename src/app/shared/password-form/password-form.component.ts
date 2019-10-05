@@ -5,13 +5,13 @@ import { map } from 'rxjs/operators';
 import { ServerErrors } from 'src/app/core/models/error-message';
 
 enum Fields {
-  PASSWORD = "password",
-  CONFIRM = "confirm"
+  PASSWORD = 'password',
+  CONFIRM = 'confirm'
 }
 
 type Errors = {
   [key in Fields]: string;
-}
+};
 
 @Component({
   selector: 'nasa-password-form',
@@ -21,13 +21,13 @@ type Errors = {
 export class PasswordFormComponent implements OnInit {
 
   @Input() errors: ServerErrors;
-  @Output() onSubmit = new EventEmitter<FormGroup>();
+  @Output() submitForm = new EventEmitter<FormGroup>();
 
   passwordForm: FormGroup;
   error: Errors = {
     password: '',
     confirm: ''
-  }
+  };
 
   private validationMessages = {
     password: {
@@ -50,13 +50,13 @@ export class PasswordFormComponent implements OnInit {
       confirm: ['', [
         Validators.required,
         Validators.minLength(8)]]
-    }, { asyncValidators: this.matchPasswords.bind(this) })
+    }, { asyncValidators: this.matchPasswords.bind(this) });
 
-    const passwordControl = this.passwordForm.get('password')
-    passwordControl.valueChanges.subscribe(() => this.notify(passwordControl, Fields.PASSWORD))
+    const passwordControl = this.passwordForm.get('password');
+    passwordControl.valueChanges.subscribe(() => this.notify(passwordControl, Fields.PASSWORD));
 
-    const confirmControl = this.passwordForm.get('confirm')
-    confirmControl.valueChanges.subscribe(() => this.notify(confirmControl, Fields.CONFIRM))
+    const confirmControl = this.passwordForm.get('confirm');
+    confirmControl.valueChanges.subscribe(() => this.notify(confirmControl, Fields.CONFIRM));
   }
 
   private notify(c: AbstractControl, field: string): void {
@@ -72,10 +72,10 @@ export class PasswordFormComponent implements OnInit {
       map(() => {
         const passwordControl = c.get('password');
         const confirmControl = c.get('confirm');
-        if (passwordControl.pristine || confirmControl.pristine) return null;
-        if (passwordControl.value === confirmControl.value) return null;
-        return { match: true }
+        if (passwordControl.pristine || confirmControl.pristine) { return null; }
+        if (passwordControl.value === confirmControl.value) { return null; }
+        return { match: true };
       })
-    )
+    );
   }
 }

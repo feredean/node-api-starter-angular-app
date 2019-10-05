@@ -4,12 +4,12 @@ import { HelloComponent } from './hello.component';
 
 const routes: Routes = [
   { path: '', component: HelloComponent }
-]
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class HelloRoutingModule {
-  static components = [HelloComponent]
+  static components = [HelloComponent];
 }

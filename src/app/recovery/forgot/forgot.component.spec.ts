@@ -12,7 +12,7 @@ describe('ForgotComponent', () => {
   let mockAuthService;
 
   beforeEach(async(() => {
-    mockAuthService = jasmine.createSpyObj(['forgotPassword'])
+    mockAuthService = jasmine.createSpyObj(['forgotPassword']);
     TestBed.configureTestingModule({
       declarations: [ForgotComponent],
       imports: [ReactiveFormsModule, MatCardModule, MatInputModule, MatSnackBarModule, NoopAnimationsModule],

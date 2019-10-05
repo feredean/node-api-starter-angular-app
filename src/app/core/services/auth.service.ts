@@ -10,7 +10,7 @@ import { ErrorMessage } from '../models/error-message';
 import { LoginRequest, RegisterRequest, ProfileRequest, PasswordChangeRequest, SuccessResponse, ForgotRequest } from './auth.model';
 
 interface TokenResponse {
-  token: string
+  token: string;
 }
 
 export interface JWTPayload {
@@ -29,7 +29,7 @@ export interface Profile {
     website: string;
     picture: string;
 
-  }
+  };
 }
 
 @Injectable({
@@ -39,10 +39,10 @@ export class AuthService {
 
   token: string | null;
 
-  private payload$ = new BehaviorSubject<JWTPayload>({} as JWTPayload)
-  payloadUpdate$ = this.payload$.asObservable()
-  private profile$ = new BehaviorSubject<Profile>({} as Profile)
-  profileChange$ = this.profile$.asObservable()
+  private payload$ = new BehaviorSubject<JWTPayload>({} as JWTPayload);
+  payloadUpdate$ = this.payload$.asObservable();
+  private profile$ = new BehaviorSubject<Profile>({} as Profile);
+  profileChange$ = this.profile$.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -54,12 +54,12 @@ export class AuthService {
   }
 
   refreshToken(): Observable<Response | boolean> {
-    if (!this.verifyToken()) return of(false)
+    if (!this.verifyToken()) { return of(false); }
     return this.http.get<TokenResponse>(`${environment.API}/account/jwt/refresh`)
       .pipe(
         map(res => this.handleToken(res)),
         catchError(this.handleError)
-      )
+      );
   }
 
   login(login: LoginRequest): Observable<boolean> {
@@ -67,7 +67,7 @@ export class AuthService {
       .pipe(
         map(res => this.handleToken(res)),
         catchError(this.handleError)
-      )
+      );
   }
 
   register(registration: RegisterRequest): Observable<boolean> {
@@ -75,7 +75,7 @@ export class AuthService {
       .pipe(
         map(res => this.handleToken(res)),
         catchError(this.handleError)
-      )
+      );
   }
 
   forgotPassword(email: ForgotRequest): Observable<boolean> {
@@ -83,7 +83,7 @@ export class AuthService {
       .pipe(
         map((res: SuccessResponse) => !!res.success),
         catchError(this.handleError)
-      )
+      );
   }
 
   deleteAccount(): Observable<boolean> {
@@ -91,7 +91,7 @@ export class AuthService {
       .pipe(
         map(res => !!res.success),
         catchError(this.handleError)
-      )
+      );
   }
 
   logout(): void {
@@ -103,7 +103,7 @@ export class AuthService {
     return this.http.get(`${environment.API}/users`)
       .pipe(
         tap(w => console.log(w))
-      )
+      );
   }
 
   changePassword(passwordData: PasswordChangeRequest): Observable<boolean> {
@@ -111,14 +111,14 @@ export class AuthService {
       .pipe(
         map((res: SuccessResponse) => !!res.success),
         catchError(this.handleError)
-      )
+      );
   }
 
   updateProfile(profile: ProfileRequest): Observable<Response | Profile> {
     return this.http.post<Profile>(`${environment.API}/account/profile`, profile)
       .pipe(
         tap((res: Profile) => this.profile$.next(this.mapProfile(res)))
-      )
+      );
   }
 
   resetPassword(data: PasswordChangeRequest, token: string): Observable<boolean> {
@@ -126,7 +126,7 @@ export class AuthService {
       .pipe(
         map((res: SuccessResponse) => !!res.success),
         catchError(this.handleError)
-      )
+      );
   }
 
   private mapProfile(res: Profile): Profile {
@@ -139,50 +139,50 @@ export class AuthService {
         website: res.profile.website,
         picture: res.profile.picture
       }
-    }
+    };
   }
 
   private refreshProfile(): void {
-    if (!this.isAuthenticated()) return
+    if (!this.isAuthenticated()) { return; }
     this.http.get<Profile>(`${environment.API}/account/profile`)
       .pipe(
         map((res): Profile => (this.mapProfile(res)))
-      ).subscribe(res => this.profile$.next(res))
+      ).subscribe(res => this.profile$.next(res));
   }
 
   private verifyToken(): boolean {
     const token = localStorage.getItem('token');
     if (token != null && !this.jwtHelper.isTokenExpired(token)) {
-      this.token = token
-      return true
+      this.token = token;
+      return true;
     } else {
       localStorage.removeItem('token');
-      this.token = null
+      this.token = null;
     }
   }
 
   private handleToken(res: TokenResponse): boolean {
     if (res.token) {
       this.token = res.token;
-      this.payload$.next(this.jwtHelper.decodeToken(this.token))
-      localStorage.setItem('token', res.token)
+      this.payload$.next(this.jwtHelper.decodeToken(this.token));
+      localStorage.setItem('token', res.token);
       this.refreshProfile();
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
   }
 
   private handleError(err: Response | any) {
     let errMessage: ErrorMessage;
     if (err instanceof HttpErrorResponse) {
-      errMessage = { status: err.status, message: err.error }
+      errMessage = { status: err.status, message: err.error };
     } else {
       errMessage = {
         status: err.status,
         message: err.message ? err.message : err.toString()
-      }
+      };
     }
-    return throwError(errMessage)
+    return throwError(errMessage);
   }
 }

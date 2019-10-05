@@ -10,8 +10,8 @@ import { JWTPayload } from '../services/auth.service';
 export class SidenavComponent {
 
   @Input() JWTPayload$: Observable<JWTPayload>;
-  @Output() closeSidenav = new EventEmitter<void>()
-  @Output() logout = new EventEmitter<void>()
+  @Output() closeSidenav = new EventEmitter<void>();
+  @Output() logout = new EventEmitter<void>();
 
   constructor() { }
 }

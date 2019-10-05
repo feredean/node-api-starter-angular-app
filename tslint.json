@@ -12,13 +12,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "nasa",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "nasa",
       "kebab-case"
     ],
     "import-blacklist": [

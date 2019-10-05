@@ -21,7 +21,7 @@ const JWTModuleOptions = {
     whitelistedDomains:
       ['localhost:9100', 'node-api-starter.experiments.explabs.io']
   }
-}
+};
 
 @NgModule({
   declarations: [AppLayoutComponent, SidenavComponent, ToolbarComponent],

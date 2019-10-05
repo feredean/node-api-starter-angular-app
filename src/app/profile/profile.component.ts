@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MatSnackBar, MatDialog } from '@angular/material';
@@ -10,11 +10,11 @@ import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.com
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-profile',
+  selector: 'nasa-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   profileForm: FormGroup;
   passwordForm: FormGroup;
@@ -35,24 +35,24 @@ export class ProfileComponent implements OnInit {
       name: '',
       location: '',
       website: ''
-    })
+    });
     this.profileSubscription = this.authService.profileChange$.subscribe(
       (data: Profile) => {
-        if (!data.profile) return
+        if (!data.profile) { return; }
         this.profileForm.patchValue({
           name: data.profile.name,
           location: data.profile.location,
           website: data.profile.website
-        })
+        });
       }
-    )
+    );
   }
 
   submitProfile(form: FormGroup) {
     this.authService.updateProfile(form.value)
       .subscribe(
         () => this.snackBar.open('Profile updated', 'Got it!', { duration: 3000 })
-      )
+      );
   }
 
   submitPassword(data: PasswordChangeRequest) {
@@ -61,7 +61,7 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         () => this.snackBar.open('Password changed', 'Got it!', { duration: 3000 }),
         (err: ServerErrors) => this.serverErrors = err
-      )
+      );
   }
 
   deleteProfile(): void {
@@ -76,15 +76,14 @@ export class ProfileComponent implements OnInit {
         this.authService.deleteAccount()
           .subscribe(
             () => {
-              this.snackBar.open('Account successfully deleted', 'Got it!', { duration: 3000 })
-              this.authService.logout()
-              this.router.navigate(['/login'])
+              this.snackBar.open('Account successfully deleted', 'Got it!', { duration: 3000 });
+              this.authService.logout();
+              this.router.navigate(['/login']);
             }
-          )
+          );
       }
     });
   }
-
 
   ngOnDestroy() {
     this.profileSubscription.unsubscribe();

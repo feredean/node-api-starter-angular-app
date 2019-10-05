@@ -24,7 +24,7 @@
 </mat-card>
 
 <mat-card class="profile">
-    <nasa-password-form [errors]="serverErrors" (onSubmit)="submitPassword($event)"></nasa-password-form>
+    <nasa-password-form [errors]="serverErrors" (submitForm)="submitPassword($event)"></nasa-password-form>
 </mat-card>
 
 <mat-card>

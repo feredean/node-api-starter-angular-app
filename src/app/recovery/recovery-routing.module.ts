@@ -6,7 +6,7 @@ import { ResetComponent } from './reset/reset.component';
 const routes: Routes = [
   { path: 'forgot', component: ForgotComponent },
   { path: 'reset/:token', component: ResetComponent },
-]
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
@@ -14,5 +14,5 @@ const routes: Routes = [
 })
 
 export class RecoveryRoutingModule {
-  static components = [ForgotComponent, ResetComponent]
+  static components = [ForgotComponent, ResetComponent];
 }

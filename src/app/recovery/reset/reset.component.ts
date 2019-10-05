@@ -7,7 +7,7 @@ import { ServerErrors } from 'src/app/core/models/error-message';
 import { PasswordChangeRequest } from 'src/app/core/services/auth.model';
 
 @Component({
-  selector: 'app-reset',
+  selector: 'nasa-reset',
   templateUrl: './reset.component.html',
   styleUrls: ['./reset.component.scss']
 })
@@ -25,7 +25,7 @@ export class ResetComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => this.token = params.token
-    )
+    );
   }
 
   onSubmit(data: PasswordChangeRequest) {
@@ -34,6 +34,6 @@ export class ResetComponent implements OnInit {
       .subscribe(
         () => this.snackBar.open('Password updated', 'Got it!', { duration: 3000 }),
         (err: ServerErrors) => this.serverErrors = err
-      )
+      );
   }
 }

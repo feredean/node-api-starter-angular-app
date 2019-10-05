@@ -10,11 +10,12 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
-  let mockAuthService, mockRouter;
+  let mockAuthService;
+  let mockRouter;
 
   beforeEach(async(() => {
-    mockAuthService = jasmine.createSpyObj(['register'])
-    mockRouter = jasmine.createSpyObj(['navigate'])
+    mockAuthService = jasmine.createSpyObj(['register']);
+    mockRouter = jasmine.createSpyObj(['navigate']);
 
     TestBed.configureTestingModule({
       declarations: [RegisterComponent],

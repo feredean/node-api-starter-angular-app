@@ -5,11 +5,12 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 describe('AuthGuard', () => {
-  let mockAuthService, mockRouter;
+  let mockAuthService;
+  let mockRouter;
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj(['isAuthenticated'])
-    mockRouter = jasmine.createSpyObj(['navigate'])
+    mockAuthService = jasmine.createSpyObj(['isAuthenticated']);
+    mockRouter = jasmine.createSpyObj(['navigate']);
 
     TestBed.configureTestingModule({
       providers: [AuthGuard,

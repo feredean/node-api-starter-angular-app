@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Profile } from '../services/auth.service';
-import * as _ from 'lodash'
+import * as _ from 'lodash';
 
 @Component({
   selector: 'nasa-toolbar',
@@ -22,10 +22,10 @@ export class ToolbarComponent implements OnInit {
   ngOnInit() {
     this.profile$.subscribe(
       (data: Profile) => {
-        const name = _.get(data, 'profile.name')
+        const name = _.get(data, 'profile.name');
         this.name = name ? name : 'Profile';
         this.avatar = data.avatar;
       }
-    )
+    );
   }
 }

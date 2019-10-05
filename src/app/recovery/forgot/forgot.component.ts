@@ -4,12 +4,12 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { MatSnackBar } from '@angular/material';
 import { ServerErrors } from 'src/app/core/models/error-message';
 
-type Errors = {
+interface Errors {
   email: string;
 }
 
 @Component({
-  selector: 'app-forgot',
+  selector: 'nasa-forgot',
   templateUrl: './forgot.component.html',
   styleUrls: ['./forgot.component.scss']
 })
@@ -19,14 +19,14 @@ export class ForgotComponent implements OnInit {
   serverErrors: ServerErrors;
   error: Errors = {
     email: ''
-  }
+  };
 
   private validationMessages = {
     email: {
       required: 'email address is required',
       email: 'email address has to be valid'
     }
-  }
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -40,9 +40,9 @@ export class ForgotComponent implements OnInit {
         Validators.required,
         Validators.email
       ]],
-    })
-    const emailControl = this.forgotForm.get('email')
-    emailControl.valueChanges.subscribe(() => this.notify(emailControl, 'email'))
+    });
+    const emailControl = this.forgotForm.get('email');
+    emailControl.valueChanges.subscribe(() => this.notify(emailControl, 'email'));
   }
 
   onSubmit(form: FormGroup) {
@@ -50,7 +50,7 @@ export class ForgotComponent implements OnInit {
       .subscribe(
         () => this.snackBar.open('An email has been sent', 'Got it!', { duration: 3000 }),
         (err: ServerErrors) => this.serverErrors = err
-      )
+      );
   }
 
   notify(c: AbstractControl, field: string): void {

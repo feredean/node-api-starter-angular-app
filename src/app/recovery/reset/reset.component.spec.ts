@@ -14,10 +14,13 @@ describe('ResetComponent', () => {
   let mockAuthService;
 
   beforeEach(async(() => {
-    mockAuthService = jasmine.createSpyObj(['resetPassword'])
+    mockAuthService = jasmine.createSpyObj(['resetPassword']);
     TestBed.configureTestingModule({
       declarations: [ResetComponent, PasswordFormComponent],
-      imports: [ReactiveFormsModule, MatCardModule, MatInputModule, MatFormFieldModule, RouterTestingModule, MatSnackBarModule, NoopAnimationsModule],
+      imports: [
+        ReactiveFormsModule, MatCardModule, MatInputModule, MatFormFieldModule,
+        RouterTestingModule, MatSnackBarModule, NoopAnimationsModule
+      ],
       providers: [
         { provide: AuthService, useValue: mockAuthService }
       ]

@@ -5,15 +5,15 @@ import { Router } from '@angular/router';
 import { ServerErrors } from '../core/models/error-message';
 
 enum Fields {
-  EMAIL = "email",
-  PASSWORD = "password"
+  EMAIL = 'email',
+  PASSWORD = 'password'
 }
 type Errors = {
   [key in Fields]: string;
-}
+};
 
 @Component({
-  selector: 'app-login',
+  selector: 'nasa-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -55,11 +55,11 @@ export class LoginComponent implements OnInit {
       ]]
     });
 
-    const emailControl = this.loginForm.get('email')
-    const passwordControl = this.loginForm.get('password')
+    const emailControl = this.loginForm.get('email');
+    const passwordControl = this.loginForm.get('password');
 
-    emailControl.valueChanges.subscribe(() => this.notify(emailControl, Fields.EMAIL))
-    passwordControl.valueChanges.subscribe(() => this.notify(passwordControl, Fields.PASSWORD))
+    emailControl.valueChanges.subscribe(() => this.notify(emailControl, Fields.EMAIL));
+    passwordControl.valueChanges.subscribe(() => this.notify(passwordControl, Fields.PASSWORD));
   }
 
   onSubmit(form: FormGroup) {

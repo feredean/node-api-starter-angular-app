@@ -12,7 +12,7 @@ describe('ConfirmModalComponent', () => {
       declarations: [ConfirmModalComponent],
       imports: [MatDialogModule, MatButtonModule],
       providers: [
-        { provide: MAT_DIALOG_DATA, useValue: { message: "hello test" } }
+        { provide: MAT_DIALOG_DATA, useValue: { message: 'hello test' } }
       ]
     })
       .compileComponents();

@@ -1,24 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from '../core/services/auth.service';
 import { ServerErrors } from '../core/models/error-message';
 import { Router } from '@angular/router';
 
 enum Fields {
-  EMAIL = "email",
-  PASSWORD = "password",
-  NAME = "name"
+  EMAIL = 'email',
+  PASSWORD = 'password',
+  NAME = 'name'
 }
 type Errors = {
   [key in Fields]: string;
-}
+};
 
 @Component({
-  selector: 'app-register',
+  selector: 'nasa-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
   serverErrors: ServerErrors;
@@ -63,14 +63,14 @@ export class RegisterComponent {
         name: ['', Validators.maxLength(30)]
       });
 
-    const emailControl = this.registerForm.get('email')
-    emailControl.valueChanges.subscribe(() => this.notify(emailControl, Fields.EMAIL))
+    const emailControl = this.registerForm.get('email');
+    emailControl.valueChanges.subscribe(() => this.notify(emailControl, Fields.EMAIL));
 
-    const passwordControl = this.registerForm.get('password')
-    passwordControl.valueChanges.subscribe(() => this.notify(passwordControl, Fields.PASSWORD))
+    const passwordControl = this.registerForm.get('password');
+    passwordControl.valueChanges.subscribe(() => this.notify(passwordControl, Fields.PASSWORD));
 
-    const nameControl = this.registerForm.get('name')
-    nameControl.valueChanges.subscribe(() => this.notify(nameControl, Fields.NAME))
+    const nameControl = this.registerForm.get('name');
+    nameControl.valueChanges.subscribe(() => this.notify(nameControl, Fields.NAME));
   }
 
   onSubmit(form: FormGroup) {

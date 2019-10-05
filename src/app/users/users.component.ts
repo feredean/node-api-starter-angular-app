@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
-  selector: 'app-users',
+  selector: 'nasa-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
@@ -13,7 +13,7 @@ export class UsersComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.authService.getAllUsers().subscribe(d => this.users = d.data)
+    this.authService.getAllUsers().subscribe(d => this.users = d.data);
   }
 
 }

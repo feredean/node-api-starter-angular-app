@@ -7,7 +7,7 @@ describe('AppComponent', () => {
   let mockAuthService;
 
   beforeEach(async(() => {
-    mockAuthService = jasmine.createSpyObj(['refreshToken'])
+    mockAuthService = jasmine.createSpyObj(['refreshToken']);
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],

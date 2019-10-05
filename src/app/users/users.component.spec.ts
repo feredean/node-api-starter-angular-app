@@ -13,17 +13,17 @@ describe('UsersComponent', () => {
 
   beforeEach(async(() => {
     PROFILE = {
-      avatar: "https://gravatar.com/avatar/5985c7230839f53ead828b47b6f01c32?s=200&d=retro",
+      avatar: 'https://gravatar.com/avatar/5985c7230839f53ead828b47b6f01c32?s=200&d=retro',
       profile: {
         gender: undefined,
         location: undefined,
-        name: "username",
+        name: 'username',
         picture: undefined,
         website: undefined
       }
-    }
-    mockAuthService = jasmine.createSpyObj(['getAllUsers'])
-    mockAuthService.getAllUsers.and.returnValue(of([PROFILE]))
+    };
+    mockAuthService = jasmine.createSpyObj(['getAllUsers']);
+    mockAuthService.getAllUsers.and.returnValue(of([PROFILE]));
     TestBed.configureTestingModule({
       declarations: [UsersComponent],
       imports: [MatCardModule],
