@@ -16,7 +16,7 @@ spec:
       nodeSelector:
       containers:
       - name: node-api-starter-angular-app
-        image: feredean/node-api-starter-angular-app:1559296564
+        image: feredean/node-api-starter-angular-app
         imagePullPolicy: Always
         ports:
         - containerPort: 80

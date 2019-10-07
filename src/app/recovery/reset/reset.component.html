@@ -1,3 +1,4 @@
 <mat-card class="reset-password">
-    <nasa-password-form [errors]="serverErrors" (submitForm)="onSubmit($event)"></nasa-password-form>
+    <nasa-password-form [errors]="serverErrors" [disabled]="processingReset" (submitForm)="onSubmit($event)">
+    </nasa-password-form>
 </mat-card>

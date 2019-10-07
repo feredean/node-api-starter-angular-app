@@ -23,7 +23,8 @@
         </mat-card-content>
         <mat-card-actions>
             <div>
-                <button mat-raised-button color="primary" type="submit" [disabled]="forgotForm.invalid">login</button>
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="forgotForm.invalid || processingForgot">send email {{processingForgot}}</button>
             </div>
         </mat-card-actions>
     </form>

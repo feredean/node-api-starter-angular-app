@@ -19,7 +19,7 @@ describe('ResetComponent', () => {
       declarations: [ResetComponent, PasswordFormComponent],
       imports: [
         ReactiveFormsModule, MatCardModule, MatInputModule, MatFormFieldModule,
-        RouterTestingModule, MatSnackBarModule, NoopAnimationsModule
+        RouterTestingModule, MatSnackBarModule, NoopAnimationsModule, RouterTestingModule
       ],
       providers: [
         { provide: AuthService, useValue: mockAuthService }

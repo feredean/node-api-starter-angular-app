@@ -11,12 +11,18 @@
     </mat-nav-list>
     <mat-nav-list *ngIf="(JWTPayload$ | async).role === 'admin'">
         <a mat-list-item routerLink="/users" (click)="closeSidenav.emit()">
-            <mat-icon>perm_identity</mat-icon>
+            <mat-icon>listing</mat-icon>
             <span class='nav-caption'>Users</span>
         </a>
     </mat-nav-list>
     <div class="bottom">
         <mat-divider></mat-divider>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/profile" (click)="closeSidenav.emit()">
+                <mat-icon>perm_identity</mat-icon>
+                <span class='nav-caption'>Profile</span>
+            </a>
+        </mat-nav-list>
         <mat-nav-list>
             <a mat-list-item routerLink="/login" (click)="logout.emit()">
                 <mat-icon>exit_to_app</mat-icon>
