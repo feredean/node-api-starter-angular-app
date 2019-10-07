@@ -24,11 +24,12 @@
 </mat-card>
 
 <mat-card class="profile">
-    <nasa-password-form [errors]="serverErrors" (submitForm)="submitPassword($event)"></nasa-password-form>
+    <nasa-password-form [errors]="serverErrors" [disabled]="processingUpdatePassword"
+        (submitForm)="submitPassword($event)">
+    </nasa-password-form>
 </mat-card>
 
-<mat-card>
-    <div fxLayout="column" fxLayoutAlign="center center">
-        <button mat-raised-button color="warn" type="submit" (click)="deleteProfile()">delete profile</button>
-    </div>
-</mat-card>
+
+<div fxLayout="column" fxLayoutAlign="center center" class="danger-zone">
+    <button mat-raised-button color="warn" type="submit" (click)="deleteProfile()">delete profile</button>
+</div>

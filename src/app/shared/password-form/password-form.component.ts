@@ -21,6 +21,7 @@ type Errors = {
 export class PasswordFormComponent implements OnInit {
 
   @Input() errors: ServerErrors;
+  @Input() disabled: boolean;
   @Output() submitForm = new EventEmitter<FormGroup>();
 
   passwordForm: FormGroup;

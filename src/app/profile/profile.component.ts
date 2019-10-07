@@ -8,6 +8,7 @@ import { AuthService, Profile } from '../core/services/auth.service';
 import { PasswordChangeRequest } from '../core/services/auth.model';
 import { ConfirmModalComponent } from '../shared/confirm-modal/confirm-modal.component';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'nasa-profile',
@@ -16,6 +17,7 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 
+  processingUpdatePassword = false;
   profileForm: FormGroup;
   passwordForm: FormGroup;
   serverErrors: ServerErrors;
@@ -57,7 +59,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   submitPassword(data: PasswordChangeRequest) {
     this.serverErrors = undefined;
+    this.processingUpdatePassword = true;
     this.authService.changePassword(data)
+      .pipe(finalize(() => this.processingUpdatePassword = false))
       .subscribe(
         () => this.snackBar.open('Password changed', 'Got it!', { duration: 3000 }),
         (err: ServerErrors) => this.serverErrors = err

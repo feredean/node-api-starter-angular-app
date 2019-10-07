@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup, AbstractControl } from '@angular/fo
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatSnackBar } from '@angular/material';
 import { ServerErrors } from 'src/app/core/models/error-message';
+import { finalize } from 'rxjs/operators';
 
 interface Errors {
   email: string;
@@ -15,6 +16,7 @@ interface Errors {
 })
 export class ForgotComponent implements OnInit {
 
+  processingForgot = false;
   forgotForm: FormGroup;
   serverErrors: ServerErrors;
   error: Errors = {
@@ -46,7 +48,10 @@ export class ForgotComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
+    this.serverErrors = undefined;
+    this.processingForgot = true;
     this.authService.forgotPassword(form.value)
+      .pipe(finalize(() => this.processingForgot = false))
       .subscribe(
         () => this.snackBar.open('An email has been sent', 'Got it!', { duration: 3000 }),
         (err: ServerErrors) => this.serverErrors = err
