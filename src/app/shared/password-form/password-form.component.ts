@@ -69,7 +69,7 @@ export class PasswordFormComponent implements OnInit {
   }
 
   private matchPasswords(c: AbstractControl): Observable<{ [key: string]: boolean } | null> {
-    return timer(300).pipe(
+    return timer(500).pipe(
       map(() => {
         const passwordControl = c.get('password');
         const confirmControl = c.get('confirm');

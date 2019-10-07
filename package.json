@@ -2,13 +2,12 @@
   "name": "node-api-starter-app",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod --aot",
+    "watch": "ng serve",
     "test": "ng test --code-coverage --watch=false",
     "watch-test": "ng test --code-coverage",
     "lint": "ng lint",
-    "watch": "ng serve",
     "e2e": "ng e2e",
     "check-deps": "npm audit && ncu"
   },

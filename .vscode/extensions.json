@@ -1,5 +1,7 @@
 {
-    "recommendations": [
-        "sibiraj-s.vscode-scss-formatter"
-    ]
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "sibiraj-s.vscode-scss-formatter",
+    "editorconfig.editorconfig"
+  ]
 }
