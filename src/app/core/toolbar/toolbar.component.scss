@@ -1,11 +1,10 @@
 mat-toolbar {
     position: sticky;
-    position: -webkit-sticky;
     top: 0;
     z-index: 1000;
     .profile {
         position: absolute;
-        right: 10px;    
+        right: 10px;
         display: flex;
         height: 32px;
         outline: none;
