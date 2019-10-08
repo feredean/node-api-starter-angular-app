@@ -13,7 +13,7 @@ This project has several purposes:
 
 - Serve as an example on how to consume the node API starter
 - Provide a boilerplate for Angular applications that are built around a dashboard
-- Serve as a reference for various implementations from CD with CircleCI to best practices and project structure.
+- Serve as a reference for various implementations and concepts from project structure to CD with CircleCI
 
 You can find the node API starter source code here [https://github.com/feredean/node-api-starter](https://github.com/feredean/node-api-starter)
 
@@ -27,15 +27,15 @@ You can find the node API starter source code here [https://github.com/feredean/
   - [Prerequisites](#prerequisites)
   - [Deploying to kubernetes](#deploying-to-kubernetes)
   - [CircleCI](#circleci)
-<!-- - [Project Structure](#project-structure) -->
+- [Project Structure](#project-structure)
 - [Build scripts](#build-scripts)
 - [Testing](#testing)
   - [Running tests](#running-tests)
   - [Linting](#linting)
   - [VSCode Extensions](#vscode-extensions)
-<!-- - [Dependencies](#dependencies) -->
-  <!-- - [`production`](#production) -->
-  <!-- - [`development`](#development) -->
+- [Dependencies](#dependencies)
+  - [`production`](#production)
+  - [`development`](#development)
 - [License](#license)
 
 # Requirements
@@ -140,7 +140,7 @@ To integrate with CircleCI:
     ```
 
 1. Make master branch a protected branch require `ci/circleci: build` check before merging from feature branches. Once a PR is merged into master CircleCI will automatically build and deploy the new version of the APP.
-<!-- 
+
 # Project Structure
 
 | Name | Description |
@@ -151,6 +151,8 @@ To integrate with CircleCI:
 | **dist**                 | Contains the code you ship                                                                                 |
 | **node_modules**         | Contains all your npm dependencies                                                                         |
 | **src/app**              | Contains the application code                                                                              |
+| **src/app/core**         | The CoreModule. Loaded once in AppModule used to instantiate the app and load core functionality           |
+| **src/app/shared**       | The SharedModule. Exports modules, directives and components and is used by multiple feature modules       |
 | **src/environments**     | Contains environment specific settings used by angular to build the app                                    |
 | .editorconfig            | Maintain coding styles consistent across various editors                                                   |
 | .nvmrc                   | A file containing the node version used in the project automatically loaded by nvm                         |
@@ -162,23 +164,22 @@ To integrate with CircleCI:
 | tsconfig.app.json        | Options used when working with code in the `app` folder                                                    |
 | tsconfig.json            | Base options that different config files will import                                                       |
 | tsconfig.spec.json       | Options used for the tests                                                                                 |
-| tslint.json              | TSLint options - on course to deprecation https://github.com/palantir/tslint#tslint                        | -->
+| tslint.json              | TSLint options - on course to deprecation https://github.com/palantir/tslint#tslint                        |
 
 # Build scripts
 
 [npm scripts](https://docs.npmjs.com/misc/scripts) can be found in `package.json` in the `scripts` section. They can call each other which means it's very easy to compose complex builds out of simple individual build scripts.
 
 | Npm Script | Description |
-| ------------------------- | -----------------------------------------------------------------------------------------------------------------|
-| `start`                   | Runs the application. Same as `watch`                                                                              |
-| `build`                   | Builds app for production                                                                                          |
-| `watch`                   | Runs the application. Use this for development                                                                     |
-| `test`                    | Runs tests using karma test runner verbosely and generates a coverage report                                       |
-| `watch-test`              | Runs tests in watch mode                                                                                           |
-| `lint`                    | Runs TSLint on project files                                                                                       |
-| `e2e`                     | Runs e2e tests                                                                                                     |
-| `check-deps`              | Audits and upgrades (inside package.json run npm install to apply) dependencies to their latest stable version     |
-|<img width=150/>||
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `start`                      | Runs the application. Same as `watch`                                                                              |
+| `build`                      | Builds app for production                                                                                          |
+| `watch`                      | Runs the application. Use this for development                                                                     |
+| `test`                       | Runs tests using karma test runner verbosely and generates a coverage report                                       |
+| `watch-test`                 | Runs tests in watch mode                                                                                           |
+| `lint`                       | Runs TSLint on project files                                                                                       |
+| `e2e`                        | Runs e2e tests                                                                                                     |
+| `check-deps` <img width=70/> | Audits and upgrades (inside package.json run npm install to apply) dependencies to their latest stable version     |
 
 # Testing
 
@@ -202,52 +203,52 @@ Angular projects are still using `TSLint`.
 - [SCSS Formatter](https://marketplace.visualstudio.com/items?itemName=sibiraj-s.vscode-scss-formatter)
 - [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 
-<!-- # Dependencies
+# Dependencies
 
 ## `production`
 
-| Package                             | Description                                                              |
-| ----------------------------------- | -------------------------------------------------------------------------|
-| @angular/animations                 | Module used for animation |
-| @angular/cdk                        | Angular Material component dev kit |
-| @angular/common                     | |
-| @angular/compiler                   | |
-| @angular/core                       | |
-| @angular/flex-layout                | |
-| @angular/forms                      | |
-| @angular/material                   | |
-| @angular/platform-browser           | |
-| @angular/platform-browser-dynamic   | |
-| @angular/router                     | |
-| @auth0/angular-jwt                  | |
-| lodash                              | |
-| tslib                               | |
-| zone.js                             | |
+| Package                             | Description                                                                                                                     |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| @angular/animations                 | Module used for animation                                                                                                       |
+| @angular/cdk                        | Angular Material component dev kit a set of tools that implement common interaction patterns                                    |
+| @angular/common                     | Implements basic Angular directives and pipes, such as NgIf, NgForOf, DecimalPipe, and so on                                    |
+| @angular/compiler                   | Angular compiler library                                                                                                        |
+| @angular/core                       | Implements Angular's core functionality, low-level services, and utilities                                                      |
+| @angular/flex-layout                | Angular Flex Layout provides a sophisticated layout API using Flexbox CSS + mediaQuery                                          |
+| @angular/forms                      | Implements a set of directives and providers to communicate with native DOM elements when building forms to capture user input  |
+| @angular/material                   | Material Design components for Angular                                                                                          |
+| @angular/platform-browser           | Supports execution of Angular apps on different supported browsers                                                              |
+| @angular/platform-browser-dynamic   | Library for using Angular in a web browser with JIT compilation                                                                 |
+| @angular/router                     | Implements the Angular Router service , which enables navigation from one view to the next as users perform application tasks   |
+| @auth0/angular-jwt                  | This library provides an HttpInterceptor which automatically attaches a JSON Web Token to HttpClient requests                   |
+| lodash                              | General utility library                                                                                                         |
+| tslib                               | Runtime library for TypeScript helper functions                                                                                 |
+| zone.js                             | Implements Zones for JavaScript                                                                                                 |
 
 ## `development`
 
 | Package                            | Description                                                                            |
 | ---------------------------------- | ---------------------------------------------------------------------------------------|
-| @angular-devkit/build-angular      | |
-| @angular/cli                       | |
-| @angular/compiler-cli              | |
-| @angular/language-service          | |
-| @types                             | |
-| codelyzer                          | |
-| jasmine-core                       | |
-| jasmine-spec-reporter              | |
-| karma                              | |
-| karma-chrome-launcher              | |
-| karma-coverage-istanbul-reporter   | |
-| karma-jasmine                      | |
-| karma-jasmine-html-reporter        | |
-| npm-check-updates                  | |
-| protractor                         | |
-| ts-node                            | |
-| tslint                             | |
-| typescript                         | |
+| @angular-devkit/build-angular      | Angular Webpack Build Facade                                                           |
+| @angular/cli                       | Angular command line interface `ng`                                                    |
+| @angular/compiler-cli              | The compiler CLI for Node.js                                                           |
+| @angular/language-service          | Angular Language Service                                                               |
+| @types                             | Dependencies in this folder are `.d.ts` files used to provide types                    |
+| codelyzer                          | Linting for Angular applications, following the angular.io/styleguide                  |
+| jasmine-core                       | BDD testing framework for JavaScript                                                   |
+| jasmine-spec-reporter              | Real time console spec reporter for jasmine testing framework.                         |
+| karma                              | Test runner                                                                            |
+| karma-chrome-launcher              | Karma plugin. Launcher for Chrome                                                      |
+| karma-coverage-istanbul-reporter   | Karma coverage reporter - uses istanbul                                                |
+| karma-jasmine                      | Karma plugin, adapter jasmine                                                          |
+| karma-jasmine-html-reporter        | Karma plugin, dynamically displays test results at debug.html                          |
+| npm-check-updates                  | Upgrades package.json dependencies to the latest versions, ignoring specified version  |
+| protractor                         | Webdriver E2E test wrapper for Angular                                                 |
+| ts-node                            | Typescript execution environment and REPL for node.js with source map support          |
+| tslint                             | Linter for Typescript                                                                  |
+| typescript                         | JavaScript compiler/type checker that boosts JavaScript productivity                   |
 
-If you're the type of person that likes to live life on the bleeding edge feel free to use `npm run check-deps`. Just remember that the typescript version needs to be compatible with angular. -->
+If you're the type of person that likes to live life on the bleeding edge feel free to use `npm run check-deps`. Just remember that the typescript version needs to be compatible with angular.
 
 # License
 

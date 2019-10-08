@@ -58,7 +58,7 @@ export class AuthService {
     return this.http.get<TokenResponse>(`${environment.API}/account/jwt/refresh`)
       .pipe(
         map(res => this.handleToken(res)),
-        catchError(this.handleError)
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -66,7 +66,7 @@ export class AuthService {
     return this.http.post<TokenResponse>(`${environment.API}/account/login`, login)
       .pipe(
         map(res => this.handleToken(res)),
-        catchError(this.handleError)
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -74,7 +74,7 @@ export class AuthService {
     return this.http.post<TokenResponse>(`${environment.API}/account/register`, registration)
       .pipe(
         map(res => this.handleToken(res)),
-        catchError(this.handleError)
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -82,7 +82,7 @@ export class AuthService {
     return this.http.post<SuccessResponse>(`${environment.API}/account/forgot`, email)
       .pipe(
         map((res: SuccessResponse) => !!res.success),
-        catchError(this.handleError)
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -90,7 +90,7 @@ export class AuthService {
     return this.http.post<SuccessResponse>(`${environment.API}/account/delete`, {})
       .pipe(
         map(res => !!res.success),
-        catchError(this.handleError)
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -110,7 +110,7 @@ export class AuthService {
     return this.http.post<SuccessResponse>(`${environment.API}/account/password`, passwordData)
       .pipe(
         map((res: SuccessResponse) => !!res.success),
-        catchError(this.handleError)
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -125,7 +125,7 @@ export class AuthService {
     return this.http.post<SuccessResponse>(`${environment.API}/account/reset/${token}`, data)
       .pipe(
         map((res: SuccessResponse) => !!res.success),
-        catchError(this.handleError)
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -174,6 +174,9 @@ export class AuthService {
   }
 
   private handleError(err: Response | any) {
+    if (err.status === 401) {
+      this.logout();
+    }
     let errMessage: ErrorMessage;
     if (err instanceof HttpErrorResponse) {
       errMessage = { status: err.status, message: err.error };
