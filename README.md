@@ -2,8 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/feredean/node-api-starter-angular-app.svg?style=shield)](https://circleci.com/gh/feredean/node-api-starter-angular-app)
 
-**Live API Demo**: [https://node-api-starter.experiments.explabs.io](https://node-api-starter.experiments.explabs.io)  
-**Live Angular APP Demo**: [https://node-api-starter-angular-app.experiments.explabs.io](https://node-api-starter-angular-app.experiments.explabs.io)
+**Live App Demo**: [https://node-api-starter-angular-app.experiments.explabs.io](https://node-api-starter-angular-app.experiments.explabs.io)  
+**Live API**: [https://node-api-starter.experiments.explabs.io/v1/hello](https://node-api-starter.experiments.explabs.io/v1/hello)  
 
 An example application that uses node API starter.
 
@@ -70,7 +70,7 @@ npm install
 npm run watch
 ```
 
-Navigate to `http://localhost:4200` and you now have access to your APP
+Navigate to [http://localhost:4200](http://localhost:4200) and you now have access to your APP
 
 # Deployment
 
