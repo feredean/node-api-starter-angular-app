@@ -224,6 +224,7 @@ Angular projects are still using `TSLint`.
 | lodash                              | General utility library                                                                                                         |
 | tslib                               | Runtime library for TypeScript helper functions                                                                                 |
 | zone.js                             | Implements Zones for JavaScript                                                                                                 |
+<!-- https://bundlephobia.com/ -->
 
 ## `development`
 

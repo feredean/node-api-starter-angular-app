@@ -6,7 +6,7 @@ import { of, throwError, Observable, BehaviorSubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
-import { ErrorMessage } from '../models/error-message';
+import { ServerErrors } from '../models/error-message';
 import { LoginRequest, RegisterRequest, ProfileRequest, PasswordChangeRequest, SuccessResponse, ForgotRequest } from './auth.model';
 
 interface TokenResponse {
@@ -177,7 +177,7 @@ export class AuthService {
     if (err.status === 401) {
       this.logout();
     }
-    let errMessage: ErrorMessage;
+    let errMessage: ServerErrors;
     if (err instanceof HttpErrorResponse) {
       errMessage = { status: err.status, message: err.error };
     } else {
