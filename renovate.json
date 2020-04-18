@@ -1,5 +1,10 @@
 {
-  "extends": [
-    "config:base"
+  "extends": ["config:base"],
+  "ignoreDeps": ["typescript"],
+  "packageRules": [
+    {
+      "updateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    }
   ]
 }
