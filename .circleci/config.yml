@@ -4,7 +4,7 @@ jobs:
   # build the project and prepare it for deployment
   build:
     docker:
-      - image: circleci/node:12.16.3-browsers
+      - image: circleci/node:12.18.2-browsers
     working_directory: ~/nasa
     steps:
       - checkout
