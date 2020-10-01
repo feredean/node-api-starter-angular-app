@@ -40,7 +40,7 @@
     "@types/jasminewd2": "2.0.8",
     "@types/lodash": "4.14.161",
     "@types/node": "12.12.62",
-    "@types/socket.io-client": "1.4.33",
+    "@types/socket.io-client": "1.4.34",
     "codelyzer": "5.2.2",
     "jasmine-core": "3.6.0",
     "jasmine-spec-reporter": "4.2.1",
