@@ -8,30 +8,19 @@ spec:
   selector:
     matchLabels:
       app: node-api-starter-angular-app
+      category: open-source
   template:
     metadata:
       labels:
         app: node-api-starter-angular-app
+        category: open-source
     spec:
       nodeSelector:
       containers:
-      - name: node-api-starter-angular-app
-        image: feredean/node-api-starter-angular-app
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: node-api-starter-angular-app
-  labels:
-    app: node-api-starter-angular-app
-spec:
-  ports:
-  - port: 80
-    targetPort: 80
-    protocol: TCP
-    name: http
-  selector:
-    app: node-api-starter-angular-app
+        - name: nasa
+          image: feredean/node-api-starter-angular-app
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: gcr-secret
