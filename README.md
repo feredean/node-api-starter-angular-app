@@ -1,4 +1,6 @@
-# Node API Starter's Frontend
+**While the project can still be used for reference, the reality is that it has aged and no longer reflects best practices. To make this clear, the project is now archived.**
+
+# Node API Starter's Frontend (Archived)
 
 [![CircleCI](https://circleci.com/gh/feredean/node-api-starter-angular-app.svg?style=shield)](https://circleci.com/gh/feredean/node-api-starter-angular-app)
 
